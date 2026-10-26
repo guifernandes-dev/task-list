@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caixaverso</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Tarefas do Caixaverso</h1>
+    <div class="card">
+      <p>Não esqueça das suas tarefas do Caixaverso. Adicione-as aqui e lembre-se delas sempre que precisar.</p>
+    </div>
+    <form id="form-tarefa" onsubmit="adicionarTarefa(event)">
+      <label for="nova-tarefa">O que você precisa fazer?</label>
+      <div class="campo-acao">
+        <input
+          type="text"
+          name="tarefa"
+          id="nova-tarefa"
+          placeholder="Ex. Estudar HTML"
+          maxlength="100"
+          required
+        >
+        <button type="submit">Adicionar</button>
+      </div>
+    </form>
+    <section aria-labelledby="titulo-lista">
+      <h2 id="titulo-lista">Minhas Tarefas</h2>
+      <p id="contador" role="status">Nenhuma tarefa pendente</p>
+      <ol id="lista-tarefas"></ol>
+    </section>
+  </div>
+</body>
+<script src="app.js"></script>
+</html>

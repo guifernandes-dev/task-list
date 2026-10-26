@@ -1,0 +1,56 @@
+html {
+  font-size: 62.5%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1.6rem;
+}
+
+body {
+  background-color: antiquewhite;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 4.6rem;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-size: 3.6rem;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+.container {
+  background-color: lightgreen;
+  padding: 3rem;
+  border-radius: 0.8rem;
+  max-width: 80%;
+  max-height: 80%;
+}
+
+.card {
+  background-color: lightblue;
+  padding: 1rem;
+}
+
+.card p {
+  text-align: justify;
+}
+
+#form-tarefa {
+  margin: 3rem;
+  padding: 1.5rem;
+  border-radius: 0.8rem;
+  border: 1px solid #9c9c9c;
+}
