@@ -1,3 +1,7 @@
+:root {
+  --border-color: #9c9c9c
+}
+
 html {
   font-size: 62.5%;
 }
@@ -25,6 +29,7 @@ h1 {
 
 h2 {
   font-size: 3.6rem;
+  margin-bottom: 1.5rem;
 }
 
 h1, h2 {
@@ -52,5 +57,22 @@ h1, h2 {
   margin: 3rem;
   padding: 1.5rem;
   border-radius: 0.8rem;
-  border: 1px solid #9c9c9c;
+  border: 1px solid var(--border-color);
+}
+
+#contador {
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+#lista-tarefas {
+  padding: 1rem 5rem;
+}
+
+.tarefa {
+  padding: 1rem;
+}
+
+#lista-tarefas .tarefa:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
 }

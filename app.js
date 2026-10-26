@@ -10,17 +10,47 @@ const atualizarContador = (tarefas) => {
     : `Tarefas pendentes: ${pendentes}`
 }
 
-const carregarTarefas = () => {
-  lista.replaceChildren();
-  const tarefas = JSON.parse(localStorage.getItem('tarefas') || '[]');
 
+
+const criarElementos = (tarefas) => {
   tarefas.forEach((tarefa) => {
     const item = document.createElement('li');
     item.classList.add('tarefa');
     item.textContent = tarefa.descricao;
     item.classList.add(tarefa.status);
     lista.appendChild(item);
+
+    if (tarefa.status !== 'concluida') {
+      if (tarefa.status === 'aberta') {
+        const botao = document.createElement('button');
+        botao.type = 'button';
+        botao.textContent = '🚀';
+        botao.title = 'Iniciar tarefa';
+        botao.classList.add('botao-iniciar');
+        lista.appendChild(botao);
+      } else {
+        const botao = document.createElement('button');
+        botao.type = 'button';
+        botao.textContent = '✅';
+        botao.title = 'Concluir tarefa';
+        botao.classList.add('botao-concluir');
+        lista.appendChild(botao);
+      }
+      const botao = document.createElement('button');
+      botao.type = 'button';
+      botao.textContent = '🗑️';
+      botao.title = 'Excluir tarefa';
+      botao.classList.add('botao-excluir');
+      lista.appendChild(botao);
+    }
   });
+};
+
+const carregarTarefas = () => {
+  lista.replaceChildren();
+  const tarefas = JSON.parse(localStorage.getItem('tarefas') || '[]');
+
+  criarElementos(tarefas);
 
   atualizarContador(tarefas);
 };
@@ -39,7 +69,7 @@ function adicionarTarefa(event) {
 
   tarefas.push({
     descricao: texto,
-    status: 'aberto'
+    status: 'aberta'
   })
   localStorage.setItem('tarefas',JSON.stringify(tarefas));
   carregarTarefas();
