@@ -10,39 +10,72 @@ const atualizarContador = (tarefas) => {
     : `Tarefas pendentes: ${pendentes}`
 }
 
-
+const alterarStatusTarefa = (item,status) => {
+  const listaId = item.id.split('-');
+  const tarefas = JSON.parse(localStorage.getItem('tarefas') || '[]');
+  if(status !== 'excluida') {
+    tarefas[Number(listaId[1])] = {
+      ...tarefas[Number(listaId[1])],
+      status
+    };
+  } else {
+    tarefas.splice(Number(listaId[1]), 1);
+  }
+  localStorage.setItem('tarefas',JSON.stringify(tarefas));
+  carregarTarefas();
+}
 
 const criarElementos = (tarefas) => {
   tarefas.forEach((tarefa) => {
+    const {id, descricao, status} = tarefa
     const item = document.createElement('li');
-    item.classList.add('tarefa');
-    item.textContent = tarefa.descricao;
-    item.classList.add(tarefa.status);
-    lista.appendChild(item);
+    item.classList.add('tarefa')
+    const texto = document.createElement('span');
+    texto.id = `tarefa-${id}`;
+    texto.textContent = `${id+1}. ${descricao}`;
+    item.classList.add(status);
+    item.appendChild(texto);
 
-    if (tarefa.status !== 'concluida') {
-      if (tarefa.status === 'aberta') {
+    if (status !== 'concluida') {
+      if (status === 'andamento') {
         const botao = document.createElement('button');
         botao.type = 'button';
-        botao.textContent = '🚀';
+        botao.textContent = '⏸️';
+        botao.title = 'Pausar tarefa';
+        botao.onclick = () => alterarStatusTarefa(texto,'pausada');
+        botao.classList.add('botao-pausar');
+        botao.id = `botao-pausar-${id}`;
+        item.appendChild(botao);
+      }
+      if (['aberta','pausada'].includes(status)) {
+        const botao = document.createElement('button');
+        botao.type = 'button';
+        botao.textContent = '▶️';
         botao.title = 'Iniciar tarefa';
+        botao.onclick = () => alterarStatusTarefa(texto,'andamento');
         botao.classList.add('botao-iniciar');
-        lista.appendChild(botao);
+        botao.id = `botao-iniciar-${id}`;
+        item.appendChild(botao);
       } else {
         const botao = document.createElement('button');
         botao.type = 'button';
         botao.textContent = '✅';
         botao.title = 'Concluir tarefa';
+        botao.onclick = () => alterarStatusTarefa(texto,'concluida');
         botao.classList.add('botao-concluir');
-        lista.appendChild(botao);
+        botao.id = `botao-concluir-${id}`;
+        item.appendChild(botao);
       }
       const botao = document.createElement('button');
       botao.type = 'button';
       botao.textContent = '🗑️';
       botao.title = 'Excluir tarefa';
       botao.classList.add('botao-excluir');
-      lista.appendChild(botao);
+      botao.onclick = () => alterarStatusTarefa(texto,'excluida');
+      botao.id = `botao-excluir-${id}`;
+      item.appendChild(botao);
     }
+    lista.appendChild(item);
   });
 };
 
@@ -68,6 +101,7 @@ function adicionarTarefa(event) {
   };
 
   tarefas.push({
+    id: tarefas.length,
     descricao: texto,
     status: 'aberta'
   })
